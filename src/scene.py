@@ -96,7 +96,7 @@ class Scene(QGraphicsScene):
     def timerEvent(self, event):
         self.game_update()
         self.view.ensureVisible(self.player, 200, 0)
-        #self.setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
+        #print(self.view.mapToScene(1, -3).x())
         self.update()
 
     def score_update(self, price):
@@ -107,9 +107,18 @@ class Scene(QGraphicsScene):
         self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points))
         self.points.setDefaultTextColor(QtGui.QColor(255, 255, 255))
         self.points.setFont(self.font)
-        #self.points.setPos(200, 200)
+        self.points.setPos(self.view.mapToScene(1, -3).x(), 0)
         #print(self.view.mapFromScene())
         self.addItem(self.points)
+
+    def move_score(self):
+        self.removeItem(self.points)
+        self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points))
+        self.points.setDefaultTextColor(QtGui.QColor(255, 255, 255))
+        self.points.setFont(self.font)
+        self.points.setPos(self.view.mapToScene(1, -3).x(), 0)
+        self.addItem(self.points)
+
 
     def game_update(self):
         self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices, self.view)
@@ -117,11 +126,12 @@ class Scene(QGraphicsScene):
         for price in self.prices:
             if price.price_update() and not price.deleted:
                 self.score_update(price)
-        if not self.player.alive:
+        if not self.player.alive: #Player died --> maybe own function
             go = QtWidgets.QGraphicsTextItem('GAME OVER')
             go.setDefaultTextColor(QtGui.QColor(255, 0, 0))
             go_font = QtGui.QFont()
             go_font.setPointSize(40)
             go.setFont(go_font)
-            go.setPos(200, 300)
+            go.setPos(self.view.mapToScene(1, -3).x() + 175, 300)
             self.addItem(go)
+        self.move_score()
