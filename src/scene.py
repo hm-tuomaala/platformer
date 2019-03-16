@@ -74,10 +74,12 @@ class Scene(QGraphicsScene):
         # self.view.setFixedSize(SCREEN_WIDTH,SCREEN_HEIGHT)
         # self.setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
 
-        self.view = Camera(self)
+        self.view = Camera(self, self.player)
+        #self.view.show()
+        self.view.setFixedSize(SCREEN_WIDTH*2,SCREEN_HEIGHT)
+        #self.view.ensureVisible(self.player)
+        #self.setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
         self.view.show()
-        self.view.setFixedSize(SCREEN_WIDTH,SCREEN_HEIGHT)
-        self.setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
 
 
 
@@ -93,6 +95,7 @@ class Scene(QGraphicsScene):
 
     def timerEvent(self, event):
         self.game_update()
+        self.view.ensureVisible(self.player, 200, 0)
         self.update()
 
     def score_update(self, price):

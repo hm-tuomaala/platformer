@@ -4,7 +4,8 @@ from PyQt5.QtCore import Qt
 
 
 class Camera(QGraphicsView):
-    def __init__(self, scene, parent = None):
+    def __init__(self, scene, player, parent = None):
         super().__init__(scene, parent)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        #self.ensureVisible(player)
