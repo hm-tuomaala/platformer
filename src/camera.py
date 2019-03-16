@@ -8,4 +8,4 @@ class Camera(QGraphicsView):
         super().__init__(scene, parent)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        #self.ensureVisible(player)
+        self.show()
