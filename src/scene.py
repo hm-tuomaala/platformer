@@ -7,12 +7,7 @@ from enemy import Enemy
 from platform import Platform
 from price import Price
 from camera import Camera
-
-SCREEN_WIDTH            = 800
-SCREEN_HEIGHT           = 600
-PLAYER_SPEED            = 3   # pix/frame
-FRAME_TIME_MS           = 16  # ms/frame
-GRAVITY                 = 0.6
+import globals
 
 
 
@@ -28,10 +23,10 @@ class Scene(QGraphicsScene):
 
         # use a timer to get 60Hz refresh (hopefully)
         self.timer = QBasicTimer()
-        self.timer.start(FRAME_TIME_MS, self)
+        self.timer.start(globals.FRAME_SPEED, self)
 
         bg = QGraphicsRectItem()
-        bg.setRect(-1,-1,SCREEN_WIDTH*2 + 2,SCREEN_HEIGHT + 2)
+        bg.setRect(-1,-1, globals.SCREEN_WIDTH*2 + 2, globals.SCREEN_HEIGHT + 2)
         bg.setBrush(QBrush(Qt.black))
         self.addItem(bg)
 
@@ -66,20 +61,10 @@ class Scene(QGraphicsScene):
         self.points.setFont(self.font)
         self.addItem(self.points)
 
-        #vanha QGV
-        # self.view = QGraphicsView(self)
-        # self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        # self.view.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        # self.view.show()
-        # self.view.setFixedSize(SCREEN_WIDTH,SCREEN_HEIGHT)
-        # self.setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
 
         self.view = Camera(self, self.player)
-        #self.view.show()
-        self.view.setFixedSize(SCREEN_WIDTH,SCREEN_HEIGHT)
-        #self.view.ensureVisible(self.player)
-        #self.setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
-        #self.view.show()
+        self.view.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
+
 
 
 
@@ -96,10 +81,9 @@ class Scene(QGraphicsScene):
     def timerEvent(self, event):
         self.game_update()
         self.view.ensureVisible(self.player, 200, 0)
-        #print(self.view.mapToScene(1, -3).x())
         self.update()
 
-    def score_update(self, price): #TODO: edit to call move_score
+    def score_update(self, price):
         self.removeItem(price)
         price.deleted = True
         self.player.points += 1
