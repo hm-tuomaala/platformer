@@ -99,17 +99,12 @@ class Scene(QGraphicsScene):
         #print(self.view.mapToScene(1, -3).x())
         self.update()
 
-    def score_update(self, price):
+    def score_update(self, price): #TODO: edit to call move_score
         self.removeItem(price)
         price.deleted = True
         self.player.points += 1
-        self.removeItem(self.points)
-        self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points))
-        self.points.setDefaultTextColor(QtGui.QColor(255, 255, 255))
-        self.points.setFont(self.font)
-        self.points.setPos(self.view.mapToScene(1, -3).x(), 0)
-        #print(self.view.mapFromScene())
-        self.addItem(self.points)
+        self.move_score()
+
 
     def move_score(self):
         self.removeItem(self.points)
@@ -119,6 +114,15 @@ class Scene(QGraphicsScene):
         self.points.setPos(self.view.mapToScene(1, -3).x(), 0)
         self.addItem(self.points)
 
+    def game_over(self):
+        go = QtWidgets.QGraphicsTextItem('GAME OVER')
+        go.setDefaultTextColor(QtGui.QColor(255, 0, 0))
+        go_font = QtGui.QFont()
+        go_font.setPointSize(40)
+        go.setFont(go_font)
+        go.setPos(self.view.mapToScene(1, -3).x() + 175, 250)
+        self.addItem(go)
+
 
     def game_update(self):
         self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices, self.view)
@@ -126,12 +130,6 @@ class Scene(QGraphicsScene):
         for price in self.prices:
             if price.price_update() and not price.deleted:
                 self.score_update(price)
-        if not self.player.alive: #Player died --> maybe own function
-            go = QtWidgets.QGraphicsTextItem('GAME OVER')
-            go.setDefaultTextColor(QtGui.QColor(255, 0, 0))
-            go_font = QtGui.QFont()
-            go_font.setPointSize(40)
-            go.setFont(go_font)
-            go.setPos(self.view.mapToScene(1, -3).x() + 175, 300)
-            self.addItem(go)
+        if not self.player.alive: #Player died
+            self.game_over()
         self.move_score()
