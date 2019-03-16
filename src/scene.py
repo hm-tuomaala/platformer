@@ -76,7 +76,7 @@ class Scene(QGraphicsScene):
 
         self.view = Camera(self, self.player)
         #self.view.show()
-        self.view.setFixedSize(SCREEN_WIDTH*2,SCREEN_HEIGHT)
+        self.view.setFixedSize(SCREEN_WIDTH,SCREEN_HEIGHT)
         #self.view.ensureVisible(self.player)
         #self.setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
         self.view.show()
