@@ -31,7 +31,7 @@ class Scene(QGraphicsScene):
         self.timer.start(FRAME_TIME_MS, self)
 
         bg = QGraphicsRectItem()
-        bg.setRect(-1,-1,SCREEN_WIDTH*2,SCREEN_HEIGHT+2)
+        bg.setRect(-1,-1,SCREEN_WIDTH*2 + 2,SCREEN_HEIGHT + 2)
         bg.setBrush(QBrush(Qt.black))
         self.addItem(bg)
 
@@ -107,11 +107,21 @@ class Scene(QGraphicsScene):
         self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points))
         self.points.setDefaultTextColor(QtGui.QColor(255, 255, 255))
         self.points.setFont(self.font)
+        #self.points.setPos(200, 200)
+        #print(self.view.mapFromScene())
         self.addItem(self.points)
 
     def game_update(self):
-        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices)
+        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices, self.view)
         self.enemy.enemy_update()
         for price in self.prices:
             if price.price_update() and not price.deleted:
                 self.score_update(price)
+        if not self.player.alive:
+            go = QtWidgets.QGraphicsTextItem('GAME OVER')
+            go.setDefaultTextColor(QtGui.QColor(255, 0, 0))
+            go_font = QtGui.QFont()
+            go_font.setPointSize(40)
+            go.setFont(go_font)
+            go.setPos(200, 300)
+            self.addItem(go)

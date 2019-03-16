@@ -13,7 +13,7 @@ class Enemy(QGraphicsRectItem):
     def __init__(self, strat_x, parent = None):
         QGraphicsRectItem.__init__(self, parent)
         self.x = strat_x
-        self.flag = True
+        self.flag = True #determines where enemy should turn
         self.setRect(self.x, SCREEN_HEIGHT - 30, 30, 30)
         self.setBrush(QBrush(Qt.green))
 
@@ -22,14 +22,13 @@ class Enemy(QGraphicsRectItem):
 
     def enemy_update(self):
         if self.flag:
-            self.x -= 5
+            self.x -= 2
             self.set_enemy()
         elif not self.flag:
-            self.x += 5
+            self.x += 2
             self.set_enemy()
 
         if self.x <= 0:
             self.flag = False
         if self.x >= SCREEN_WIDTH - 30:
             self.flag = True
-        
