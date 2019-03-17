@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QGraphicsView
 from PyQt5.QtCore import Qt
+import globals
 
 
 class Camera(QGraphicsView):
@@ -9,3 +10,4 @@ class Camera(QGraphicsView):
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.show()
+        # self.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
