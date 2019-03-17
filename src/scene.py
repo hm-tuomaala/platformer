@@ -41,7 +41,7 @@ class Scene(QGraphicsScene):
         self.addItem(self.platform)
         self.pfset.append(self.platform)
 
-        self.enemy = Enemy(500)
+        self.enemy = Enemy(500, 400)
         self.addItem(self.enemy)
 
         self.price1 = Price(250, 350)
