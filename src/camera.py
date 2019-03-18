@@ -5,9 +5,9 @@ import globals
 
 
 class Camera(QGraphicsView):
-    def __init__(self, scene, player, parent = None):
+    def __init__(self, scene, parent = None):
         super().__init__(scene, parent)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.show()
-        # self.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
+        self.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)

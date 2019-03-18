@@ -23,7 +23,7 @@ class Player(QGraphicsRectItem):
     def set_player(self, x, y):
         self.setRect(self.x, self.y, 30, 30)
 
-    def player_update(self, keys_pressed, enemy, timer, platforms, prices, scene):
+    def player_update(self, keys_pressed, enemy, timer, platforms, prices):
 
         #print(self.can_jump)
         #Basic Gravity
