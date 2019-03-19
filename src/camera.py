@@ -11,3 +11,6 @@ class Camera(QGraphicsView):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.show()
         self.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
+
+    def update_scene(self, scene):
+        self.setScene(scene)

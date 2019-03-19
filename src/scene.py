@@ -12,7 +12,7 @@ import globals
 
 
 class Scene(QGraphicsScene):
-    def __init__(self, parent = None):
+    def __init__(self, cam, parent = None):
         QGraphicsScene.__init__(self, parent)
 
         self.pfset = []
@@ -62,9 +62,10 @@ class Scene(QGraphicsScene):
         self.addItem(self.points)
 
 
-        self.view = Camera(self)
+        # self.view = Camera(self, self.player)
         # self.view.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
-
+        self.view = cam
+        self.view.update_scene(self)
 
 
 

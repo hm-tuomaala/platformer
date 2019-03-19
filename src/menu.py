@@ -19,4 +19,5 @@ class Menu(QGraphicsScene):
         #self.gameScene = Scene()
 
     def mousePressEvent(self, event):
-        self.view = Camera(Scene())
+        scene = Scene(self.view)
+        print('hep')
