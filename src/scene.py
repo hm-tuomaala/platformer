@@ -12,11 +12,13 @@ import globals
 
 
 class Scene(QGraphicsScene):
-    def __init__(self, cam, parent = None):
+    def __init__(self, cam, menu, parent = None):
         QGraphicsScene.__init__(self, parent)
 
         self.pfset = []
         self.prices = []
+        self.dead = False
+        self.menu = menu
 
         # hold the set of keys we're pressing
         self.keys_pressed = set()
@@ -62,12 +64,14 @@ class Scene(QGraphicsScene):
         self.addItem(self.points)
 
 
-        # self.view = Camera(self, self.player)
-        # self.view.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
+
         self.view = cam
         self.view.update_scene(self)
 
 
+    def mousePressEvent(self, event):
+        if self.dead:
+            self.view.update_scene(self.menu)
 
     def keyPressEvent(self, event):
         if event.key() == 32 and 32 in self.keys_pressed:
@@ -97,21 +101,17 @@ class Scene(QGraphicsScene):
 
 
     def move_score(self):
-        # self.removeItem(self.points)
-        # self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points))
-        # self.points.setDefaultTextColor(QtGui.QColor(255, 255, 255))
-        # self.points.setFont(self.font)
         self.points.setPos(self.view.mapToScene(1, -3).x(), 0)
-        # self.addItem(self.points)
 
     def game_over(self):
-        go = QtWidgets.QGraphicsTextItem('GAME OVER')
-        go.setDefaultTextColor(QtGui.QColor(255, 0, 0))
+        game_over = QtWidgets.QGraphicsTextItem('GAME OVER')
+        game_over.setDefaultTextColor(QtGui.QColor(255, 0, 0))
         go_font = QtGui.QFont()
         go_font.setPointSize(40)
-        go.setFont(go_font)
-        go.setPos(self.view.mapToScene(1, -3).x() + 175, 250)
-        self.addItem(go)
+        game_over.setFont(go_font)
+        game_over.setPos(self.view.mapToScene(1, -3).x() + 175, 250)
+        self.addItem(game_over)
+        self.dead = True
 
 
     def game_update(self):

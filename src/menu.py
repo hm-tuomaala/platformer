@@ -12,12 +12,11 @@ class Menu(QGraphicsScene):
         QGraphicsScene.__init__(self, parent)
 
         self.addItem(QtWidgets.QGraphicsTextItem('Mario Game'))
-        rect = QGraphicsRectItem(100, 100, 100, 100)
+        rect = QGraphicsRectItem(0, 0, 100, 100)
         self.addItem(rect)
         self.view = Camera(self)
         self.view.setFixedSize(globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
         #self.gameScene = Scene()
 
     def mousePressEvent(self, event):
-        scene = Scene(self.view)
-        print('hep')
+        scene = Scene(self.view, self)
