@@ -10,13 +10,13 @@ class Enemy(QGraphicsRectItem):
         QGraphicsRectItem.__init__(self, parent)
         self.x = start_x
         self.vasemmalle = True #determines direction of enemy
-        self.setRect(self.x, globals.SCREEN_HEIGHT - 30, 30, 30)
+        self.setRect(self.x, globals.SCREEN_HEIGHT - 40, 40, 40)
         self.setBrush(QBrush(Qt.green))
         self.kuljettu = 0
         self.distance = dist
 
     def set_enemy(self):
-        self.setRect(self.x, globals.SCREEN_HEIGHT - 30, 30, 30)
+        self.setRect(self.x, globals.SCREEN_HEIGHT - 40, 40, 40)
 
     def enemy_update(self):
         if self.vasemmalle:

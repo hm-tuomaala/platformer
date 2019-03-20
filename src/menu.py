@@ -12,7 +12,7 @@ from infoscene import Infoscene
 class Menu(QGraphicsScene):
     def __init__(self, parent = None):
         QGraphicsScene.__init__(self, parent)
-        self.view = Camera(self)
+
         bg = QGraphicsRectItem()
         bg.setRect(0,0, globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT)
         bg.setBrush(QBrush(Qt.black))
@@ -50,7 +50,7 @@ class Menu(QGraphicsScene):
         self.addItem(self.b1)
         self.addItem(self.b2)
 
-
+        self.view = Camera(self)
         self.view.ensureVisible(bg)
 
 

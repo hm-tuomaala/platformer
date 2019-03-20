@@ -12,7 +12,7 @@ class Player(QGraphicsRectItem):
         QGraphicsRectItem.__init__(self,parent)
         self.x = 0
         self.y = globals.SCREEN_HEIGHT
-        self.setRect(self.x, self.y, 30, 30)
+        self.setRect(self.x, self.y, 40, 40)
         self.setBrush(QBrush(Qt.white))
         self.velocity = 0
         self.lift = -30
@@ -21,7 +21,7 @@ class Player(QGraphicsRectItem):
         self.alive = True
 
     def set_player(self, x, y):
-        self.setRect(self.x, self.y, 30, 30)
+        self.setRect(self.x, self.y, 40, 40)
 
     def player_update(self, keys_pressed, enemy, timer, platforms, prices):
 
@@ -34,26 +34,26 @@ class Player(QGraphicsRectItem):
         if self.x < 0:
             self.x = 0
             self.set_player(self.x, self.y)
-        if self.x + 30 > globals.SCREEN_WIDTH * 2:
-            self.x = globals.SCREEN_WIDTH * 2 - 30
+        if self.x + 40 > globals.SCREEN_WIDTH * 2:
+            self.x = globals.SCREEN_WIDTH * 2 - 40
             self.set_player(self.x, self.y)
 
         for pf in platforms:
             #print(pf.x, pf.y)
-            if self.x + 30 > pf.x and self.x < pf.x + pf.width and self.y + 30 > pf.y and self.y < pf.y + 10:
-                self.y = pf.y - 30
+            if self.x + 40 >= pf.x and self.x <= pf.x + pf.width and self.y + 40 >= pf.y and self.y <= pf.y + 10:
+                self.y = pf.y - 40
                 self.set_player(self.x, self.y)
                 #print('hep')
                 self.can_jump = True
                 #self.on_platform = True
 
-            elif self.y + 30 < globals.SCREEN_HEIGHT: #and not self.on_platform:
+            elif self.y + 40 < globals.SCREEN_HEIGHT: #and not self.on_platform:
                 self.set_player(self.x, self.y)
                 #self.can_jump = False
                 #print('jaaaaaaaaaaaaaaaaaapaaaaaaaaaaaaaaaaaaaaaa')
 
             else:
-                self.y = globals.SCREEN_HEIGHT - 30
+                self.y = globals.SCREEN_HEIGHT - 40
                 self.set_player(self.x, self.y)
                 self.can_jump = True
                 #self.on_platform = False
@@ -72,7 +72,7 @@ class Player(QGraphicsRectItem):
             self.can_jump = False
 
 
-        if self.x + 30 > enemy.x and self.x < enemy.x + 30 and self.y + 30 > globals.SCREEN_HEIGHT - 30:
+        if self.x + 40 >= enemy.x and self.x <= enemy.x + 40 and self.y + 40 >= globals.SCREEN_HEIGHT - 40:
             #Kuoltiin
             #print('DEAD')
             self.alive = False
@@ -80,5 +80,7 @@ class Player(QGraphicsRectItem):
 
 
         for price in prices:
-            if self.x + 30 > price.x and self.x < price.x + 10 and self.y + 30 > price.y and self.y < price.y + 10 and not price.deleted:
+            if (self.x + 40 > price.x and self.x < price.x + 10 and self.y + 40 > price.y
+                and self.y < price.y + 10 and not price.deleted):
+
                 price.available = False

@@ -28,7 +28,7 @@ class Scene(QGraphicsScene):
         self.timer.start(globals.FRAME_SPEED, self)
 
         bg = QGraphicsRectItem()
-        bg.setRect(-1,-1, globals.SCREEN_WIDTH*2 + 2, globals.SCREEN_HEIGHT + 2)
+        bg.setRect(0,0, globals.SCREEN_WIDTH*2, globals.SCREEN_HEIGHT)
         bg.setBrush(QBrush(Qt.black))
         self.addItem(bg)
 
@@ -85,7 +85,7 @@ class Scene(QGraphicsScene):
 
     def timerEvent(self, event):
         self.game_update()
-        self.view.ensureVisible(self.player, 200, 0)
+        self.view.ensureVisible(self.player, 350, 0)
         self.update()
 
     def score_update(self, price):
