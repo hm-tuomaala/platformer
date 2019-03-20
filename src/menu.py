@@ -6,6 +6,7 @@ from PyQt5.QtGui import QBrush, QColor
 import globals
 from scene import Scene
 from camera import Camera
+from infoscene import Infoscene
 
 
 class Menu(QGraphicsScene):
@@ -56,5 +57,9 @@ class Menu(QGraphicsScene):
     def mousePressEvent(self, QMouseEvent):
         #scene = Scene(self.view, self)
         #print(str(QMouseEvent.scenePos().x()), str(QMouseEvent.scenePos().y()))
-        if QMouseEvent.scenePos().x() >= 147 and QMouseEvent.scenePos().x() <= 147+104 and QMouseEvent.scenePos().y() >= 300 and QMouseEvent.scenePos().y() <= 300+60:
+        if (QMouseEvent.scenePos().x() >= 147 and QMouseEvent.scenePos().x() <= 147+104
+            and QMouseEvent.scenePos().y() >= 300 and QMouseEvent.scenePos().y() <= 300+60):
             scene = Scene(self.view, self)
+        elif (QMouseEvent.scenePos().x() >= 547 and QMouseEvent.scenePos().x() <= 547+106
+            and QMouseEvent.scenePos().y() >= 300 and QMouseEvent.scenePos().y() <= 300+60):
+            scene = Infoscene(self.view, self)
