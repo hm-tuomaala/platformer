@@ -35,18 +35,18 @@ class Enemy(QGraphicsRectItem):
         new_y = self.y + self.vel_y
 
         if self.vel_x <= 0:
-            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor(new_x/40)] != 0:
+            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((self.y+38)/40)][math.floor(new_x/40)] == 1:
                 new_x = math.floor(new_x/40)*40 + 40
                 self.vel_x = 0
                 self.can_move = False
         else:
-            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor((new_x+40)/40)] != 0:
+            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] == 1 or map.map[math.floor((self.y+38)/40)][math.floor((new_x+40)/40)] == 1:
                 new_x = math.floor(new_x/40)*40
                 self.vel_x = 0
                 self.can_move = True
 
         if self.vel_y > 0:
-            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+38)/40)] != 0:
+            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+38)/40)] == 1:
                 new_y = math.floor(new_y/40)*40
                 self.vel_y = 0
 

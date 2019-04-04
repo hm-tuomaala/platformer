@@ -58,7 +58,6 @@ class Player(QGraphicsRectItem):
         new_x = self.x + self.vel_x
         new_y = self.y + self.vel_y
 
-        print(keys_pressed)
 
         # Tormayksen tarkistus
         if self.vel_x <= 0:
