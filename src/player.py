@@ -38,7 +38,7 @@ class Player(QGraphicsRectItem):
                 self.can_jump = False
 
 
-    def player_update(self, keys_pressed, enemy, timer, platforms, prices, map):
+    def player_update(self, keys_pressed, enemy, timer, prices, map):
 
         self.move(keys_pressed)
 
@@ -61,20 +61,20 @@ class Player(QGraphicsRectItem):
 
         # Tormayksen tarkistus
         if self.vel_x <= 0:
-            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor(new_x/40)] != 0:
+            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((self.y+37)/40)][math.floor(new_x/40)] == 1:
                 new_x = math.floor(new_x/40)*40 + 40
                 self.vel_x = 0
         else:
-            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor((new_x+40)/40)] != 0:
+            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] == 1 or map.map[math.floor((self.y+37)/40)][math.floor((new_x+40)/40)] == 1:
                 new_x = math.floor(new_x/40)*40
                 self.vel_x = 0
 
         if self.vel_y <= 0:
-            if map.map[math.floor(new_y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y)/40)][math.floor((new_x+38)/40)] != 0:
+            if map.map[math.floor(new_y/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((new_y)/40)][math.floor((new_x+37)/40)] == 1:
                 new_y = math.floor(new_y/40)*40 + 40
                 self.vel_y = 0
         else:
-            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+38)/40)] != 0:
+            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+37)/40)] == 1:
                 new_y = math.floor(new_y/40)*40
                 self.vel_y = 0
                 self.can_jump = True
@@ -87,14 +87,20 @@ class Player(QGraphicsRectItem):
         self.vel_x = 0
 
 
-        # Enemy
+        # Tarkastetaan vihollisen sijainti
         if self.x + 40 > enemy.x and self.x < enemy.x + 40 and self.y + 40 > enemy.y and self.y < enemy.y + 40:
             self.alive = False
             timer.stop()
             self.vel_y = 0
             self.vel_x = 0
 
-        # Prices
+        # Tarkistetaan, ettei olla tiputtu veteen
+        if self.y + 40 > globals.SCREEN_HEIGHT - 40:
+            self.alive = False
+            timer.stop()
+            self.vel_x = self.vel_y = 0
+
+        # Tarkastetaan palkinnon sijainti
         for price in prices:
             if (self.x + 40 > price.x and self.x < price.x + 10 and self.y + 40 > price.y
                 and self.y < price.y + 10 and not price.deleted):

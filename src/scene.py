@@ -16,7 +16,6 @@ class Scene(QGraphicsScene):
     def __init__(self, cam, menu, parent = None):
         QGraphicsScene.__init__(self, parent)
 
-        self.pfset = []
         self.prices = []
         self.dead = False
         self.menu = menu
@@ -42,10 +41,12 @@ class Scene(QGraphicsScene):
                 if self.map.map[i][j] == 1:
                     self.platform = Platform(j*40, i*40)
                     self.addItem(self.platform)
-                    self.pfset.append(self.platform)
                 elif self.map.map[i][j] == 4:
                     self.enemy = Enemy(j*40, i*40)
                     self.addItem(self.enemy)
+                elif self.map.map[i][j] == 2:
+                    self.platform = Platform(j*40, i*40, 2)
+                    self.addItem(self.platform)
 
         # self.enemy = Enemy(500, 200)
         # self.addItem(self.enemy)
@@ -116,11 +117,11 @@ class Scene(QGraphicsScene):
 
 
     def game_update(self):
-        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices, self.map)
+        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.prices, self.map)
         self.enemy.enemy_update(self.map)
         for price in self.prices:
             if price.price_update() and not price.deleted:
                 self.score_update(price)
-        if not self.player.alive: #Player died
+        if not self.player.alive: #Pelaaja kuoli
             self.game_over()
         self.move_score()
