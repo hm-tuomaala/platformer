@@ -7,6 +7,7 @@ from enemy import Enemy
 from platform import Platform
 from price import Price
 from camera import Camera
+from map import Map
 import globals
 
 
@@ -35,13 +36,21 @@ class Scene(QGraphicsScene):
         self.player = Player()
         self.addItem(self.player)
 
-        self.platform = Platform(400, 500, 100)
-        self.addItem(self.platform)
-        self.pfset.append(self.platform)
+        # self.platform = Platform(400, 500, 100)
+        # self.addItem(self.platform)
+        # self.pfset.append(self.platform)
+        #
+        # self.platform = Platform(200, 400, 100)
+        # self.addItem(self.platform)
+        # self.pfset.append(self.platform)
 
-        self.platform = Platform(200, 400, 100)
-        self.addItem(self.platform)
-        self.pfset.append(self.platform)
+        self.map = Map()
+        for i in range(int(globals.SCREEN_HEIGHT / 40)):
+            for j in range(int((globals.SCREEN_WIDTH * 2) / 40)):
+                if self.map.map[i][j] == 1:
+                    self.platform = Platform(j*40, i*40)
+                    self.addItem(self.platform)
+                    self.pfset.append(self.platform)
 
         self.enemy = Enemy(500, 400)
         self.addItem(self.enemy)
@@ -74,10 +83,12 @@ class Scene(QGraphicsScene):
             self.view.update_scene(self.menu)
 
     def keyPressEvent(self, event):
-        if event.key() == 32 and 32 in self.keys_pressed:
-            pass
-        else:
-            self.keys_pressed.add(event.key())
+        # if event.key() == 32 and 32 in self.keys_pressed:
+        #     pass
+        # else:
+        #     self.keys_pressed.add(event.key())
+
+        self.keys_pressed.add(event.key())
 
     def keyReleaseEvent(self, event):
         if event.key() != 32:
@@ -115,7 +126,7 @@ class Scene(QGraphicsScene):
 
 
     def game_update(self):
-        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices)
+        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices, self.map)
         self.enemy.enemy_update()
         for price in self.prices:
             if price.price_update() and not price.deleted:

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem
 from PyQt5.QtGui import QBrush
 from PyQt5.QtCore import Qt
 import globals
+import math
 
 
 
@@ -10,77 +11,90 @@ import globals
 class Player(QGraphicsRectItem):
     def __init__(self, parent = None):
         QGraphicsRectItem.__init__(self,parent)
-        self.x = 0
-        self.y = globals.SCREEN_HEIGHT
+        self.x = 100
+        self.y = 100
+        self.vel_x = 0
+        self.vel_y = 0
         self.setRect(self.x, self.y, 40, 40)
         self.setBrush(QBrush(Qt.white))
-        self.velocity = 0
-        self.lift = -30
-        self.can_jump = True
+        self.lift = -17
+        self.can_jump = False
         self.points = 0
         self.alive = True
 
     def set_player(self, x, y):
-        self.setRect(self.x, self.y, 40, 40)
+        self.setRect(x, y, 40, 40)
 
-    def player_update(self, keys_pressed, enemy, timer, platforms, prices):
 
-        #print(self.can_jump)
-        #Basic Gravity
-        self.velocity += globals.GRAVITY
-        self.velocity *= 0.95
-        self.y += self.velocity
-
-        if self.x < 0:
-            self.x = 0
-            self.set_player(self.x, self.y)
-        if self.x + 40 > globals.SCREEN_WIDTH * 2:
-            self.x = globals.SCREEN_WIDTH * 2 - 40
-            self.set_player(self.x, self.y)
-
-        for pf in platforms:
-            #print(pf.x, pf.y)
-            if self.x + 40 >= pf.x and self.x <= pf.x + pf.width and self.y + 40 >= pf.y and self.y <= pf.y + 10:
-                self.y = pf.y - 40
-                self.set_player(self.x, self.y)
-                #print('hep')
-                self.can_jump = True
-                #self.on_platform = True
-
-            elif self.y + 40 < globals.SCREEN_HEIGHT: #and not self.on_platform:
-                self.set_player(self.x, self.y)
-                #self.can_jump = False
-                #print('jaaaaaaaaaaaaaaaaaapaaaaaaaaaaaaaaaaaaaaaa')
-
-            else:
-                self.y = globals.SCREEN_HEIGHT - 40
-                self.set_player(self.x, self.y)
-                self.can_jump = True
-                #self.on_platform = False
-
-        #Check if Player needs to move
+    def move(self, keys_pressed):
         if Qt.Key_Left in keys_pressed:
-            self.x -= globals.PLAYER_SPEED
+            self.vel_x = -globals.PLAYER_SPEED
         if Qt.Key_Right in keys_pressed:
-            self.x += globals.PLAYER_SPEED
-        if Qt.Key_Space in keys_pressed and self.can_jump:
+            self.vel_x = globals.PLAYER_SPEED
+        if Qt.Key_Space in keys_pressed:
             keys_pressed.remove(Qt.Key_Space)
-            self.velocity += self.lift
-            self.can_jump = False
-        elif Qt.Key_Space in keys_pressed and not self.can_jump:
-            keys_pressed.remove(Qt.Key_Space)
-            self.can_jump = False
+            if self.vel_y == 0 and self.can_jump:
+                self.vel_y = self.lift
+                self.can_jump = False
 
 
+    def player_update(self, keys_pressed, enemy, timer, platforms, prices, map):
+
+        self.move(keys_pressed)
+
+        # Painovoima
+        self.vel_y += globals.GRAVITY
+
+        if self.vel_x > 10:
+            self.vel_x = 10
+        if self.vel_x < -10:
+            self.vel_x = -10
+        if self.vel_y > 100:
+            self.vel_y = 100
+        if self.vel_y < -100:
+            self.vel_y = -100
+
+
+        new_x = self.x + self.vel_x
+        new_y = self.y + self.vel_y
+
+        print(keys_pressed)
+
+        # Tormayksen tarkistus
+        if self.vel_x <= 0:
+            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor(new_x/40)] != 0:
+                new_x = math.floor(new_x/40)*40 + 40
+                self.vel_x = 0
+        else:
+            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor((new_x+40)/40)] != 0:
+                new_x = math.floor(new_x/40)*40
+                self.vel_x = 0
+
+        if self.vel_y <= 0:
+            if map.map[math.floor(new_y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y)/40)][math.floor((new_x+38)/40)] != 0:
+                new_y = math.floor(new_y/40)*40 + 40
+                self.vel_y = 0
+        else:
+            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+38)/40)] != 0:
+                new_y = math.floor(new_y/40)*40
+                self.vel_y = 0
+                self.can_jump = True
+
+        self.x = new_x
+        self.y = new_y
+
+        self.set_player(self.x, self.y)
+
+        self.vel_x = 0
+
+
+        # Enemy
         if self.x + 40 >= enemy.x and self.x <= enemy.x + 40 and self.y + 40 >= globals.SCREEN_HEIGHT - 40:
-            #Kuoltiin
-            #print('DEAD')
             self.alive = False
             timer.stop()
 
-
+        # Prices
         for price in prices:
             if (self.x + 40 > price.x and self.x < price.x + 10 and self.y + 40 > price.y
                 and self.y < price.y + 10 and not price.deleted):
-
                 price.available = False

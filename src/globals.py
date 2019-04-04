@@ -10,6 +10,6 @@ def init():
 
     SCREEN_WIDTH  = 800
     SCREEN_HEIGHT = 600
-    PLAYER_SPEED  = 3
+    PLAYER_SPEED  = 3.0
     FRAME_SPEED   = 16
-    GRAVITY       = 0.6
+    GRAVITY       = 1
