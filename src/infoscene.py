@@ -40,7 +40,7 @@ class Infoscene(QGraphicsScene):
         self.title.setFont(self.titleFont)
         self.addItem(self.title)
 
-        text = ('The player can move with left and right arrow keys and jump with space. '
+        text = ('Kario can move with left and right arrow keys and jump with space. '
                 + 'Points are awarded by collecting small red awards but be aware of '
                 + 'green enemys: If you touch them you die! If you can get to the '
                 + 'goal you win the level!')

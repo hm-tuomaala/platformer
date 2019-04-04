@@ -89,9 +89,11 @@ class Player(QGraphicsRectItem):
 
 
         # Enemy
-        if self.x + 40 >= enemy.x and self.x <= enemy.x + 40 and self.y + 40 >= globals.SCREEN_HEIGHT - 40:
+        if self.x + 40 > enemy.x and self.x < enemy.x + 40 and self.y + 40 > enemy.y and self.y < enemy.y + 40:
             self.alive = False
             timer.stop()
+            self.vel_y = 0
+            self.vel_x = 0
 
         # Prices
         for price in prices:

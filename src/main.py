@@ -13,7 +13,6 @@ if __name__ == '__main__':
     globals.init()
 
     app = QApplication(sys.argv)
-    app.setApplicationName('Mario')
-    #scene = Scene()
+    app.setApplicationName('Kario')
     scene = Menu()
     sys.exit(app.exec_())

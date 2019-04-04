@@ -21,10 +21,9 @@ class Scene(QGraphicsScene):
         self.dead = False
         self.menu = menu
 
-        # hold the set of keys we're pressing
+        # Tallennetaan painetut nappaimet
         self.keys_pressed = set()
 
-        # use a timer to get 60Hz refresh (hopefully)
         self.timer = QBasicTimer()
         self.timer.start(globals.FRAME_SPEED, self)
 
@@ -36,13 +35,6 @@ class Scene(QGraphicsScene):
         self.player = Player()
         self.addItem(self.player)
 
-        # self.platform = Platform(400, 500, 100)
-        # self.addItem(self.platform)
-        # self.pfset.append(self.platform)
-        #
-        # self.platform = Platform(200, 400, 100)
-        # self.addItem(self.platform)
-        # self.pfset.append(self.platform)
 
         self.map = Map()
         for i in range(int(globals.SCREEN_HEIGHT / 40)):
@@ -52,7 +44,7 @@ class Scene(QGraphicsScene):
                     self.addItem(self.platform)
                     self.pfset.append(self.platform)
 
-        self.enemy = Enemy(500, 400)
+        self.enemy = Enemy(500, 200)
         self.addItem(self.enemy)
 
         self.price1 = Price(250, 350)
@@ -83,11 +75,6 @@ class Scene(QGraphicsScene):
             self.view.update_scene(self.menu)
 
     def keyPressEvent(self, event):
-        # if event.key() == 32 and 32 in self.keys_pressed:
-        #     pass
-        # else:
-        #     self.keys_pressed.add(event.key())
-
         self.keys_pressed.add(event.key())
 
     def keyReleaseEvent(self, event):
@@ -127,7 +114,7 @@ class Scene(QGraphicsScene):
 
     def game_update(self):
         self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.pfset, self.prices, self.map)
-        self.enemy.enemy_update()
+        self.enemy.enemy_update(self.map)
         for price in self.prices:
             if price.price_update() and not price.deleted:
                 self.score_update(price)

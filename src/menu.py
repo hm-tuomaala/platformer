@@ -23,7 +23,7 @@ class Menu(QGraphicsScene):
         self.buttonFont = QtGui.QFont()
         self.buttonFont.setPointSize(20)
 
-        self.title = QtWidgets.QGraphicsTextItem('Mario Game')
+        self.title = QtWidgets.QGraphicsTextItem('Kario Game')
         self.title.setDefaultTextColor(QtGui.QColor(255, 0, 0))
         self.title.setFont(self.titleFont)
         self.title.setPos(190, 100)
@@ -55,8 +55,6 @@ class Menu(QGraphicsScene):
 
 
     def mousePressEvent(self, QMouseEvent):
-        #scene = Scene(self.view, self)
-        #print(str(QMouseEvent.scenePos().x()), str(QMouseEvent.scenePos().y()))
         if (QMouseEvent.scenePos().x() >= 147 and QMouseEvent.scenePos().x() <= 147+104
             and QMouseEvent.scenePos().y() >= 300 and QMouseEvent.scenePos().y() <= 300+60):
             scene = Scene(self.view, self)
