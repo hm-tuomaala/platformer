@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem
-from PyQt5.QtGui import QBrush
+from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem, QGraphicsPixmapItem
+from PyQt5.QtGui import QBrush, QPixmap
 from PyQt5.QtCore import Qt
 import globals
 import math
@@ -8,22 +8,28 @@ import math
 
 
 
-class Player(QGraphicsRectItem):
+class Player(QGraphicsPixmapItem):
     def __init__(self, parent = None):
-        QGraphicsRectItem.__init__(self,parent)
+        #QGraphicsRectItem.__init__(self,parent)
+        QGraphicsPixmapItem.__init__(self, parent)
         self.x = 100
         self.y = 100
         self.vel_x = 0
         self.vel_y = 0
-        self.setRect(self.x, self.y, 40, 40)
-        self.setBrush(QBrush(Qt.white))
+
+        self.setPixmap(QPixmap("hero.png"))
+        self.setPos(self.x, self.y)
+
+        #self.setRect(self.x, self.y, 40, 40)
+        #self.setBrush(QBrush(Qt.white))
         self.lift = -17
         self.can_jump = False
         self.points = 0
         self.alive = True
 
     def set_player(self, x, y):
-        self.setRect(x, y, 40, 40)
+        #self.setRect(x, y, 40, 40)
+        self.setPos(x, y)
 
 
     def move(self, keys_pressed):

@@ -1,18 +1,20 @@
 from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem
-from PyQt5.QtGui import QBrush
+from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem, QGraphicsPixmapItem
+from PyQt5.QtGui import QBrush, QPixmap
 from PyQt5.QtCore import Qt
 import globals
 
-class Platform(QGraphicsRectItem):
+class Platform(QGraphicsPixmapItem):
     def __init__(self, x, y, val = 1, parent = None):
-        QGraphicsRectItem.__init__(self, parent)
+        QGraphicsPixmapItem.__init__(self, parent)
         self.x = x
         self.y = y
-        self.width = 40
-        self.height = 40
-        self.setRect(self.x, self.y, self.width, self.height)
+        # self.width = 40
+        # self.height = 40
+        # self.setRect(self.x, self.y, self.width, self.height)
         if val == 1:
-            self.setBrush(QBrush(Qt.white))
+            self.setPixmap(QPixmap("ground.png"))
+            self.setPos(self.x, self.y)
         elif val == 2:
-            self.setBrush(QBrush(Qt.blue))
+            self.setPixmap(QPixmap("water.png"))
+            self.setPos(self.x, self.y)
