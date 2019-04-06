@@ -21,3 +21,9 @@ class Platform(QGraphicsPixmapItem):
         elif val == 3:
             self.setPixmap(QPixmap("static/box.png"))
             self.setPos(self.x, self.y)
+        elif val == 4:
+            self.setPixmap(QPixmap("static/tube_top.png"))
+            self.setPos(self.x, self.y)
+        elif val == 5:
+            self.setPixmap(QPixmap("static/tube.png"))
+            self.setPos(self.x, self.y)

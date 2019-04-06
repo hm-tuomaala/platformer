@@ -50,6 +50,12 @@ class Scene(QGraphicsScene):
                 elif self.map.map[i][j] == 3:
                     self.platform = Platform(j*40, i*40, 3)
                     self.addItem(self.platform)
+                elif self.map.map[i][j] == 4:
+                    self.platform = Platform(j*40-5, i*40, 4)
+                    self.addItem(self.platform)
+                elif self.map.map[i][j] == 5:
+                    self.platform = Platform(j*40, i*40, 5)
+                    self.addItem(self.platform)
 
         self.enemy = Enemy(500, 200)
         self.addItem(self.enemy)

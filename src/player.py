@@ -69,20 +69,20 @@ class Player(QGraphicsPixmapItem):
 
         # Tormayksen tarkistus
         if self.vel_x <= 0:
-            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+37)/40)][math.floor(new_x/40)] != 0:
+            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+36)/40)][math.floor(new_x/40)] != 0:
                 new_x = math.floor(new_x/40)*40 + 40
                 self.vel_x = 0
         else:
-            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] != 0 or map.map[math.floor((self.y+37)/40)][math.floor((new_x+40)/40)] != 0:
+            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] != 0 or map.map[math.floor((self.y+36)/40)][math.floor((new_x+40)/40)] != 0:
                 new_x = math.floor(new_x/40)*40
                 self.vel_x = 0
 
         if self.vel_y <= 0:
-            if map.map[math.floor(new_y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y)/40)][math.floor((new_x+37)/40)] != 0:
+            if map.map[math.floor(new_y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y)/40)][math.floor((new_x+36)/40)] != 0:
                 new_y = math.floor(new_y/40)*40 + 40
                 self.vel_y = 0
         else:
-            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+37)/40)] != 0:
+            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+36)/40)] != 0:
                 new_y = math.floor(new_y/40)*40
                 self.vel_y = 0
                 self.can_jump = True
