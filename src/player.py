@@ -53,14 +53,14 @@ class Player(QGraphicsPixmapItem):
         # Painovoima
         self.vel_y += globals.GRAVITY
 
-        if self.vel_x > 10:
-            self.vel_x = 10
-        if self.vel_x < -10:
-            self.vel_x = -10
-        if self.vel_y > 100:
-            self.vel_y = 100
-        if self.vel_y < -100:
-            self.vel_y = -100
+        # if self.vel_x > 10:
+        #     self.vel_x = 10
+        # if self.vel_x < -10:
+        #     self.vel_x = -10
+        # if self.vel_y > 100:
+        #     self.vel_y = 100
+        # if self.vel_y < -100:
+        #     self.vel_y = -100
 
 
         new_x = self.x + self.vel_x

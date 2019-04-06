@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 import globals
 
 class Platform(QGraphicsPixmapItem):
-    def __init__(self, x, y, val = 1, parent = None):
+    def __init__(self, x, y, val, parent = None):
         QGraphicsPixmapItem.__init__(self, parent)
         self.x = x
         self.y = y
@@ -23,7 +23,10 @@ class Platform(QGraphicsPixmapItem):
             self.setPos(self.x, self.y)
         elif val == 4:
             self.setPixmap(QPixmap("static/tube_top.png"))
-            self.setPos(self.x, self.y)
+            self.setPos(self.x-5, self.y)
         elif val == 5:
             self.setPixmap(QPixmap("static/tube.png"))
+            self.setPos(self.x, self.y)
+        elif val == 6:
+            self.setPixmap(QPixmap("static/tile1.png"))
             self.setPos(self.x, self.y)

@@ -28,7 +28,7 @@ class Scene(QGraphicsScene):
 
         bg = QGraphicsRectItem()
         bg.setRect(0,0, globals.SCREEN_WIDTH*4, globals.SCREEN_HEIGHT)
-        bg.setBrush(QBrush(Qt.black))
+        bg.setBrush(QBrush(QtGui.QColor(128, 223, 255)))
         self.addItem(bg)
 
         self.player = Player()
@@ -38,24 +38,24 @@ class Scene(QGraphicsScene):
         self.map = Map()
         for i in range(int(globals.SCREEN_HEIGHT / 40)):
             for j in range(int((globals.SCREEN_WIDTH*4) / 40)):
-                if self.map.map[i][j] == 1:
-                    self.platform = Platform(j*40, i*40)
+                if self.map.map[i][j] > 0:
+                    self.platform = Platform(j*40, i*40, self.map.map[i][j])
                     self.addItem(self.platform)
+                # elif self.map.map[i][j] == 4:
+                #     self.platform = Platform(j*40-5, i*40, 4)
+                #     self.addItem(self.platform)
                 # elif self.map.map[i][j] == 4:
                 #     self.enemy = Enemy(j*40, i*40)
                     # self.addItem(self.enemy)
-                elif self.map.map[i][j] == 2:
-                    self.platform = Platform(j*40, i*40, 2)
-                    self.addItem(self.platform)
-                elif self.map.map[i][j] == 3:
-                    self.platform = Platform(j*40, i*40, 3)
-                    self.addItem(self.platform)
-                elif self.map.map[i][j] == 4:
-                    self.platform = Platform(j*40-5, i*40, 4)
-                    self.addItem(self.platform)
-                elif self.map.map[i][j] == 5:
-                    self.platform = Platform(j*40, i*40, 5)
-                    self.addItem(self.platform)
+                # elif self.map.map[i][j] == 2:
+                #     self.platform = Platform(j*40, i*40, 2)
+                #     self.addItem(self.platform)
+                # elif self.map.map[i][j] == 3:
+                #     self.platform = Platform(j*40, i*40, 3)
+                #     self.addItem(self.platform)
+                # elif self.map.map[i][j] == 5:
+                #     self.platform = Platform(j*40, i*40, 5)
+                #     self.addItem(self.platform)
 
         self.enemy = Enemy(500, 200)
         self.addItem(self.enemy)
