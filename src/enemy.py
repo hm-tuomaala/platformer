@@ -1,24 +1,25 @@
 from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem
-from PyQt5.QtGui import QBrush
+from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem, QGraphicsPixmapItem
+from PyQt5.QtGui import QBrush, QPixmap
 from PyQt5.QtCore import Qt
 import globals
 import math
 
 
-class Enemy(QGraphicsRectItem):
+class Enemy(QGraphicsPixmapItem):
     def __init__(self, start_x, start_y, parent = None):
-        QGraphicsRectItem.__init__(self, parent)
+        QGraphicsPixmapItem.__init__(self, parent)
         self.x = start_x
         self.y = start_y
         self.vel_y = 0
         self.vel_x = 0
-        self.setRect(self.x, self.y, 40, 40)
-        self.setBrush(QBrush(Qt.green))
+        self.setPixmap(QPixmap("static/enemy_left.png"))
+        self.setPos(self.x, self.y)
+        #self.setBrush(QBrush(Qt.green))
         self.can_move = True
 
     def set_enemy(self):
-        self.setRect(self.x, self.y, 40, 40)
+        self.setPos(self.x, self.y)
 
     def move(self):
         if self.can_move:
@@ -35,18 +36,20 @@ class Enemy(QGraphicsRectItem):
         new_y = self.y + self.vel_y
 
         if self.vel_x <= 0:
-            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((self.y+38)/40)][math.floor(new_x/40)] == 1:
+            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor(new_x/40)] != 0:
                 new_x = math.floor(new_x/40)*40 + 40
                 self.vel_x = 0
                 self.can_move = False
+                self.setPixmap(QPixmap("static/enemy_right.png"))
         else:
-            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] == 1 or map.map[math.floor((self.y+38)/40)][math.floor((new_x+40)/40)] == 1:
+            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor((new_x+40)/40)] != 0:
                 new_x = math.floor(new_x/40)*40
                 self.vel_x = 0
                 self.can_move = True
+                self.setPixmap(QPixmap("static/enemy_left.png"))
 
         if self.vel_y > 0:
-            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+38)/40)] == 1:
+            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+38)/40)] != 0:
                 new_y = math.floor(new_y/40)*40
                 self.vel_y = 0
 

@@ -17,7 +17,7 @@ class Player(QGraphicsPixmapItem):
         self.vel_x = 0
         self.vel_y = 0
 
-        self.setPixmap(QPixmap("hero.png"))
+        self.setPixmap(QPixmap("static/kario_right.png"))
         self.setPos(self.x, self.y)
 
         #self.setRect(self.x, self.y, 40, 40)
@@ -35,8 +35,10 @@ class Player(QGraphicsPixmapItem):
     def move(self, keys_pressed):
         if Qt.Key_Left in keys_pressed:
             self.vel_x = -globals.PLAYER_SPEED
+            self.setPixmap(QPixmap("static/kario_left.png"))
         if Qt.Key_Right in keys_pressed:
             self.vel_x = globals.PLAYER_SPEED
+            self.setPixmap(QPixmap("static/kario_right.png"))
         if Qt.Key_Space in keys_pressed:
             keys_pressed.remove(Qt.Key_Space)
             if self.vel_y == 0 and self.can_jump:
@@ -67,20 +69,20 @@ class Player(QGraphicsPixmapItem):
 
         # Tormayksen tarkistus
         if self.vel_x <= 0:
-            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((self.y+37)/40)][math.floor(new_x/40)] == 1:
+            if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+37)/40)][math.floor(new_x/40)] != 0:
                 new_x = math.floor(new_x/40)*40 + 40
                 self.vel_x = 0
         else:
-            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] == 1 or map.map[math.floor((self.y+37)/40)][math.floor((new_x+40)/40)] == 1:
+            if map.map[math.floor(self.y/40)][math.floor((new_x+40)/40)] != 0 or map.map[math.floor((self.y+37)/40)][math.floor((new_x+40)/40)] != 0:
                 new_x = math.floor(new_x/40)*40
                 self.vel_x = 0
 
         if self.vel_y <= 0:
-            if map.map[math.floor(new_y/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((new_y)/40)][math.floor((new_x+37)/40)] == 1:
+            if map.map[math.floor(new_y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y)/40)][math.floor((new_x+37)/40)] != 0:
                 new_y = math.floor(new_y/40)*40 + 40
                 self.vel_y = 0
         else:
-            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] == 1 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+37)/40)] == 1:
+            if map.map[math.floor((new_y+40)/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((new_y+40)/40)][math.floor((new_x+37)/40)] != 0:
                 new_y = math.floor(new_y/40)*40
                 self.vel_y = 0
                 self.can_jump = True
@@ -101,13 +103,13 @@ class Player(QGraphicsPixmapItem):
             self.vel_x = 0
 
         # Tarkistetaan, ettei olla tiputtu veteen
-        if self.y + 40 > globals.SCREEN_HEIGHT - 40:
+        if self.y + 40 >= globals.SCREEN_HEIGHT - 40:
             self.alive = False
             timer.stop()
             self.vel_x = self.vel_y = 0
 
         # Tarkastetaan palkinnon sijainti
         for price in prices:
-            if (self.x + 40 > price.x and self.x < price.x + 10 and self.y + 40 > price.y
-                and self.y < price.y + 10 and not price.deleted):
+            if (self.x + 40 > price.x and self.x < price.x + 20 and self.y + 40 > price.y
+                and self.y < price.y + 20 and not price.deleted):
                 price.available = False

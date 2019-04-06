@@ -13,8 +13,11 @@ class Platform(QGraphicsPixmapItem):
         # self.height = 40
         # self.setRect(self.x, self.y, self.width, self.height)
         if val == 1:
-            self.setPixmap(QPixmap("ground.png"))
+            self.setPixmap(QPixmap("static/ground.png"))
             self.setPos(self.x, self.y)
         elif val == 2:
-            self.setPixmap(QPixmap("water.png"))
+            self.setPixmap(QPixmap("static/water.png"))
+            self.setPos(self.x, self.y)
+        elif val == 3:
+            self.setPixmap(QPixmap("static/box.png"))
             self.setPos(self.x, self.y)
