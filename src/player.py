@@ -34,10 +34,10 @@ class Player(QGraphicsPixmapItem):
 
     def move(self, keys_pressed):
         if Qt.Key_Left in keys_pressed:
-            self.vel_x = -globals.PLAYER_SPEED
+            self.vel_x += -globals.PLAYER_SPEED
             self.setPixmap(QPixmap("static/kario_left.png"))
         if Qt.Key_Right in keys_pressed:
-            self.vel_x = globals.PLAYER_SPEED
+            self.vel_x += globals.PLAYER_SPEED
             self.setPixmap(QPixmap("static/kario_right.png"))
         if Qt.Key_Space in keys_pressed:
             keys_pressed.remove(Qt.Key_Space)
@@ -53,10 +53,12 @@ class Player(QGraphicsPixmapItem):
         # Painovoima
         self.vel_y += globals.GRAVITY
 
-        # if self.vel_x > 10:
-        #     self.vel_x = 10
-        # if self.vel_x < -10:
-        #     self.vel_x = -10
+        if self.vel_x > 5:
+            self.vel_x = 5
+        if self.vel_x < -5:
+            self.vel_x = -5
+        if self.vel_x < 0.2 and self.vel_x > -0.2:
+            self.vel_x = 0
         # if self.vel_y > 100:
         #     self.vel_y = 100
         # if self.vel_y < -100:
@@ -92,7 +94,10 @@ class Player(QGraphicsPixmapItem):
 
         self.set_player(self.x, self.y)
 
-        self.vel_x = 0
+        # self.vel_x = 0
+        if self.can_jump:
+            self.vel_x *= 0.89
+        #print(self.vel_x, self.vel_y)
 
 
         # Tarkastetaan vihollisen sijainti
