@@ -41,21 +41,6 @@ class Scene(QGraphicsScene):
                 if self.map.map[i][j] > 0:
                     self.platform = Platform(j*40, i*40, self.map.map[i][j])
                     self.addItem(self.platform)
-                # elif self.map.map[i][j] == 4:
-                #     self.platform = Platform(j*40-5, i*40, 4)
-                #     self.addItem(self.platform)
-                # elif self.map.map[i][j] == 4:
-                #     self.enemy = Enemy(j*40, i*40)
-                    # self.addItem(self.enemy)
-                # elif self.map.map[i][j] == 2:
-                #     self.platform = Platform(j*40, i*40, 2)
-                #     self.addItem(self.platform)
-                # elif self.map.map[i][j] == 3:
-                #     self.platform = Platform(j*40, i*40, 3)
-                #     self.addItem(self.platform)
-                # elif self.map.map[i][j] == 5:
-                #     self.platform = Platform(j*40, i*40, 5)
-                #     self.addItem(self.platform)
 
         self.enemy = Enemy(500, 200)
         self.addItem(self.enemy)
@@ -76,11 +61,10 @@ class Scene(QGraphicsScene):
         self.font = QtGui.QFont()
         self.font.setPointSize(15)
 
-        self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points))
-        self.points.setDefaultTextColor(QtGui.QColor(255, 255, 255))
+        self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points) + ' / ' + str(len(self.prices)))
+        self.points.setDefaultTextColor(QtGui.QColor(38, 38, 38))
         self.points.setFont(self.font)
         self.addItem(self.points)
-
 
 
         self.view = cam
@@ -108,8 +92,8 @@ class Scene(QGraphicsScene):
         self.removeItem(self.points)
         price.deleted = True
         self.player.points += 1
-        self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points))
-        self.points.setDefaultTextColor(QtGui.QColor(255, 255, 255))
+        self.points = QtWidgets.QGraphicsTextItem('Score: ' + str(self.player.points) + ' / ' + str(len(self.prices)))
+        self.points.setDefaultTextColor(QtGui.QColor(38, 38, 38))
         self.points.setFont(self.font)
         self.move_score()
         self.addItem(self.points)
