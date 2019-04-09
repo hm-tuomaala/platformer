@@ -63,7 +63,7 @@ class Player(QGraphicsPixmapItem):
                 self.can_jump = False
 
 
-    def player_update(self, keys_pressed, enemy, timer, prices, map):
+    def player_update(self, keys_pressed, enemy, timer, prices, map, goal):
 
         self.move(keys_pressed)
         if not self.can_jump:
@@ -144,6 +144,16 @@ class Player(QGraphicsPixmapItem):
                 timer.stop()
                 self.vel_y = 0
                 self.vel_x = 0
+
+        #Tarkistetaan ollaanko maalissa ja tehdaan animaatio
+        if self.collidesWithItem(goal):
+            goal.victory = True
+        if goal.victory:
+            goal.counter += 0.1
+            if goal.counter >= 6.9:
+                goal.counter = 6.9
+            goal.setPixmap(goal.animation[math.floor(goal.counter % 7)])
+
 
         # Tarkistetaan, ettei olla tiputtu veteen
         if self.y + 40 >= globals.SCREEN_HEIGHT - 40:

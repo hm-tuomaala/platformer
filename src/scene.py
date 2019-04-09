@@ -9,6 +9,7 @@ from platform import Platform
 from price import Price
 from camera import Camera
 from map import Map
+from goal import Goal
 import globals
 
 
@@ -70,6 +71,9 @@ class Scene(QGraphicsScene):
         self.points.setFont(self.font)
         self.addItem(self.points)
 
+        self.goal = Goal(3000, 440)
+        self.addItem(self.goal)
+
 
         self.view = cam
         self.view.update_scene(self)
@@ -118,7 +122,7 @@ class Scene(QGraphicsScene):
 
 
     def game_update(self):
-        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.prices, self.map)
+        self.player.player_update(self.keys_pressed, self.enemy, self.timer, self.prices, self.map, self.goal)
         self.enemy.enemy_update(self.map)
         for price in self.prices:
             if price.price_update() and not price.deleted:
