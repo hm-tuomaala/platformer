@@ -17,6 +17,8 @@ class Enemy(QGraphicsPixmapItem):
         self.setPos(self.x, self.y)
         #self.setBrush(QBrush(Qt.green))
         self.can_move = True
+        self.alive = True
+        self.deleted = False
 
     def set_enemy(self):
         self.setPos(self.x, self.y)
@@ -55,5 +57,6 @@ class Enemy(QGraphicsPixmapItem):
 
         self.x = new_x
         self.y = new_y
+
 
         self.set_enemy()

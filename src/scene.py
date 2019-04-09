@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt, QBasicTimer
-from PyQt5.QtWidgets import QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView, QGraphicsTextItem, QFrame
+from PyQt5.QtWidgets import (QGraphicsItem, QGraphicsRectItem, QGraphicsScene,
+                             QGraphicsView, QGraphicsTextItem, QFrame)
 from PyQt5.QtGui import QBrush, QColor
 from player import Player
 from enemy import Enemy
@@ -42,6 +43,9 @@ class Scene(QGraphicsScene):
                     self.platform = Platform(j*40, i*40, self.map.map[i][j])
                     self.addItem(self.platform)
 
+        self.enemy = Enemy(500, 200)
+        self.addItem(self.enemy)
+        self.removeItem(self.enemy)
         self.enemy = Enemy(500, 200)
         self.addItem(self.enemy)
 
@@ -122,3 +126,6 @@ class Scene(QGraphicsScene):
         if not self.player.alive: #Pelaaja kuoli
             self.game_over()
         self.move_score()
+        if not self.enemy.alive and not self.enemy.deleted:
+            self.removeItem(self.enemy)
+            self.enemy.deleted = True

@@ -16,12 +16,19 @@ class Player(QGraphicsPixmapItem):
         self.y = 100
         self.vel_x = 0
         self.vel_y = 0
+        self.counter = 0
+        #dir0: oikealle, dir1: vasemmalle
+        self.dir = 0
 
-        self.setPixmap(QPixmap("static/kario_right.png"))
+        #animaatio koe
+        self.animations_right = [QPixmap("static/koe1.png"), QPixmap("static/koe2.png"), QPixmap("static/koe3.png")]
+        self.animations_left = [QPixmap("static/koe4.png"), QPixmap("static/koe5.png"), QPixmap("static/koe6.png")]
+        #/
+
+        self.setPixmap(self.animations_right[0])
+        # self.setPixmap(QPixmap("static/kario_right.png"))
         self.setPos(self.x, self.y)
 
-        #self.setRect(self.x, self.y, 40, 40)
-        #self.setBrush(QBrush(Qt.white))
         self.lift = -17
         self.can_jump = False
         self.points = 0
@@ -35,10 +42,20 @@ class Player(QGraphicsPixmapItem):
     def move(self, keys_pressed):
         if Qt.Key_Left in keys_pressed:
             self.vel_x += -globals.PLAYER_SPEED
-            self.setPixmap(QPixmap("static/kario_left.png"))
-        if Qt.Key_Right in keys_pressed:
+            self.counter += 0.15
+            self.dir = 1
+            #self.setPixmap(QPixmap("static/kario_left.png"))
+        if Qt.Key_Right in keys_pressed:#muutettu if -> elif animaatiota varten
             self.vel_x += globals.PLAYER_SPEED
-            self.setPixmap(QPixmap("static/kario_right.png"))
+            self.counter += 0.15
+            self.dir = 0
+            #self.setPixmap(QPixmap("static/kario_right.png"))
+        if Qt.Key_Right not in keys_pressed and Qt.Key_Left not in keys_pressed:
+            self.counter = 0
+            if self.dir == 0:
+                self.setPixmap(self.animations_right[0])
+            else:
+                self.setPixmap(self.animations_left[0])
         if Qt.Key_Space in keys_pressed:
             keys_pressed.remove(Qt.Key_Space)
             if self.vel_y == 0 and self.can_jump:
@@ -49,16 +66,30 @@ class Player(QGraphicsPixmapItem):
     def player_update(self, keys_pressed, enemy, timer, prices, map):
 
         self.move(keys_pressed)
+        if not self.can_jump:
+            if self.dir == 0:
+                self.setPixmap(self.animations_right[1])
+            else:
+                self.setPixmap(self.animations_left[1])
+        else:
+            if self.dir == 0:
+                self.setPixmap(self.animations_right[math.floor(self.counter % 3)])
+            else:
+                self.setPixmap(self.animations_left[math.floor(self.counter % 3)])
 
         # Painovoima
         self.vel_y += globals.GRAVITY
 
-        if self.vel_x > 5:
-            self.vel_x = 5
-        if self.vel_x < -5:
-            self.vel_x = -5
-        if self.vel_x < 0.2 and self.vel_x > -0.2:
+        if self.vel_x > 4.8:
+            self.vel_x = 4.8
+        if self.vel_x < -4.8:
+            self.vel_x = -4.8
+        if self.vel_x < 0.6 and self.vel_x > -0.6:
             self.vel_x = 0
+            # if self.dir == 0:
+            #     self.setPixmap(self.animations_right[0])
+            # else:
+            #     self.setPixmap(self.animations_left[0])
         # if self.vel_y > 100:
         #     self.vel_y = 100
         # if self.vel_y < -100:
@@ -96,16 +127,23 @@ class Player(QGraphicsPixmapItem):
 
         # self.vel_x = 0
         if self.can_jump:
-            self.vel_x *= 0.89
+            self.vel_x *= 0.85
+        else:
+            self.vel_x *= 0.985
         #print(self.vel_x, self.vel_y)
 
 
         # Tarkastetaan vihollisen sijainti
-        if self.x + 40 > enemy.x and self.x < enemy.x + 40 and self.y + 40 > enemy.y and self.y < enemy.y + 40:
-            self.alive = False
-            timer.stop()
-            self.vel_y = 0
-            self.vel_x = 0
+        if self.collidesWithItem(enemy) and enemy.alive:
+            if self.y + 5 < enemy.y:
+                for i in range(10):
+                    self.vel_y += -3.3
+                enemy.alive = False
+            else:
+                self.alive = False
+                timer.stop()
+                self.vel_y = 0
+                self.vel_x = 0
 
         # Tarkistetaan, ettei olla tiputtu veteen
         if self.y + 40 >= globals.SCREEN_HEIGHT - 40:
