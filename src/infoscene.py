@@ -41,12 +41,13 @@ class Infoscene(QGraphicsScene):
         self.addItem(self.title)
 
         text = ('Kario can move with left and right arrow keys and jump with space. '
-                + 'Points are awarded by collecting small red awards but be aware of '
-                + 'green enemys: If you touch them you die! If you can get to the '
-                + 'goal you win the level!')
+                + 'Your job is to collect every price as quickly as possible but be aware of '
+                + 'turtle enemys: If they touch you, you will die! How ever, you can'
+                + 'distroy them by jumping on them. If you have collected all of the '
+                + 'prices and succesfully make it to the goal, you win the level!')
         self.text = QtWidgets.QGraphicsTextItem(text)
         self.text.setDefaultTextColor(QtGui.QColor(255, 255, 255))
-        self.text.setPos(150, 130)
+        self.text.setPos(85, 130)
         self.text.setFont(self.textFont)
         self.text.adjustSize()
         self.addItem(self.text)

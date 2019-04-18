@@ -144,6 +144,7 @@ class Player(QGraphicsPixmapItem):
             if goal.counter >= 6.9:
                 goal.counter = 6.9
                 self.win = True
+                timer.stop()
             goal.setPixmap(goal.animation[math.floor(goal.counter % 7)])
 
 
