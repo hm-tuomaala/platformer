@@ -72,6 +72,7 @@ class Menu(QGraphicsScene):
         elif (QMouseEvent.scenePos().x() >= 547 and QMouseEvent.scenePos().x() <= 547+106
             and QMouseEvent.scenePos().y() >= 300 and QMouseEvent.scenePos().y() <= 300+60):
             scene = Infoscene(self.view, self)
+
     def update_hs(self):
         self.removeItem(self.hs)
         with open("static/highscore.json") as f:

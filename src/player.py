@@ -11,7 +11,7 @@ import math
 class Player(QGraphicsPixmapItem):
     def __init__(self, parent = None):
         QGraphicsPixmapItem.__init__(self, parent)
-        self.x = 80
+        self.x = 41
         self.y = 100
         self.vel_x = 0
         self.vel_y = 0
@@ -22,8 +22,15 @@ class Player(QGraphicsPixmapItem):
         self.score = 0
 
         #animaatio
-        self.animations_right = [QPixmap("static/kario2_right.png"), QPixmap("static/kario3_right.png"), QPixmap("static/kario2_right.png"), QPixmap("static/kario5_right.png")]
-        self.animations_left = [QPixmap("static/kario2_left.png"), QPixmap("static/kario3_left.png"), QPixmap("static/kario2_left.png"), QPixmap("static/kario5_left.png")]
+        self.animations_right = [QPixmap("static/kario2_right.png"),
+                                 QPixmap("static/kario3_right.png"),
+                                 QPixmap("static/kario2_right.png"),
+                                 QPixmap("static/kario5_right.png")]
+
+        self.animations_left = [QPixmap("static/kario2_left.png"),
+                                QPixmap("static/kario3_left.png"),
+                                QPixmap("static/kario2_left.png"),
+                                QPixmap("static/kario5_left.png")]
 
 
         self.setPixmap(QPixmap("static/kario1_right.png"))

@@ -60,11 +60,38 @@ class Scene(QGraphicsScene):
         self.addItem(self.price3)
         self.prices.append(self.price3)
 
+        self.price4 = Price(1330, 250)
+        self.addItem(self.price4)
+        self.prices.append(self.price4)
+
+        self.price5 = Price(1455, 500)
+        self.addItem(self.price5)
+        self.prices.append(self.price5)
+
+        self.price6 = Price(1830, 250)
+        self.addItem(self.price6)
+        self.prices.append(self.price6)
+
+        self.price7 = Price(2100, 100)
+        self.addItem(self.price7)
+        self.prices.append(self.price7)
+
+        self.price8 = Price(2490, 500)
+        self.addItem(self.price8)
+        self.prices.append(self.price8)
+
+        self.price9 = Price(2770, 200)
+        self.addItem(self.price9)
+        self.prices.append(self.price9)
+
+        self.price10 = Price(3100, 205)
+        self.addItem(self.price10)
+        self.prices.append(self.price10)
 
         self.font = QtGui.QFont()
         self.font.setPointSize(15)
 
-        self.points = QtWidgets.QGraphicsTextItem('Prices: ' + str(self.player.points) + ' / ' + str(len(self.prices)))
+        self.points = QtWidgets.QGraphicsTextItem('Prices: ' + str(self.player.points) + '/' + str(len(self.prices)))
         self.points.setDefaultTextColor(QtGui.QColor(38, 38, 38))
         self.points.setFont(self.font)
         self.addItem(self.points)
@@ -110,7 +137,7 @@ class Scene(QGraphicsScene):
         self.removeItem(self.points)
         price.deleted = True
         self.player.points += 1
-        self.points = QtWidgets.QGraphicsTextItem('Prices: ' + str(self.player.points) + ' / ' + str(len(self.prices)))
+        self.points = QtWidgets.QGraphicsTextItem('Prices: ' + str(self.player.points) + '/' + str(len(self.prices)))
         self.points.setDefaultTextColor(QtGui.QColor(38, 38, 38))
         self.points.setFont(self.font)
         self.move_score()
@@ -136,7 +163,7 @@ class Scene(QGraphicsScene):
         go_font = QtGui.QFont()
         go_font.setPointSize(40)
         game_win.setFont(go_font)
-        game_win.setPos(self.view.mapToScene(1, -3).x() + 175, 150)
+        game_win.setPos(self.view.mapToScene(1, -3).x() + 175, 90)
         self.addItem(game_win)
 
         with open('static/highscore.json') as f:
@@ -146,7 +173,7 @@ class Scene(QGraphicsScene):
             new_highscore = QtWidgets.QGraphicsTextItem('New Highscore: ' + str(int(self.time)))
             new_highscore.setDefaultTextColor(QtGui.QColor(0, 128, 0))
             new_highscore.setFont(self.font)
-            new_highscore.setPos(self.view.mapToScene(1, -3).x() + 230, 250)
+            new_highscore.setPos(self.view.mapToScene(1, -3).x() + 230, 170)
             self.addItem(new_highscore)
             with open('static/highscore.json', "w") as f:
                 write = {"highscore": self.time}
