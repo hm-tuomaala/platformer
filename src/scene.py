@@ -19,7 +19,7 @@ class Scene(QGraphicsScene):
         QGraphicsScene.__init__(self, parent)
 
         self.prices = []
-        self.dead = False
+        #self.dead = False
         self.menu = menu
 
         # Tallennetaan painetut nappaimet
@@ -77,7 +77,7 @@ class Scene(QGraphicsScene):
 
 
     def mousePressEvent(self, event):
-        if self.dead:
+        if not self.player.alive:
             self.view.update_scene(self.menu)
 
     def keyPressEvent(self, event):
@@ -115,7 +115,7 @@ class Scene(QGraphicsScene):
         game_over.setFont(go_font)
         game_over.setPos(self.view.mapToScene(1, -3).x() + 175, 250)
         self.addItem(game_over)
-        self.dead = True
+        #self.dead = True
 
 
     def game_update(self):

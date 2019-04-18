@@ -33,6 +33,7 @@ class Player(QGraphicsPixmapItem):
         self.can_jump = False
         self.points = 0
         self.alive = True
+        self.win = False
 
     def set_player(self, x, y):
         self.setPos(x, y)
@@ -142,6 +143,7 @@ class Player(QGraphicsPixmapItem):
             goal.counter += 0.1
             if goal.counter >= 6.9:
                 goal.counter = 6.9
+                self.win = True
             goal.setPixmap(goal.animation[math.floor(goal.counter % 7)])
 
 
