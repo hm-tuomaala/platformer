@@ -10,23 +10,23 @@ import math
 
 class Player(QGraphicsPixmapItem):
     def __init__(self, parent = None):
-        #QGraphicsRectItem.__init__(self,parent)
         QGraphicsPixmapItem.__init__(self, parent)
-        self.x = 100
+        self.x = 80
         self.y = 100
         self.vel_x = 0
         self.vel_y = 0
         self.counter = 0
+
         #dir0: oikealle, dir1: vasemmalle
         self.dir = 0
+        self.score = 0
 
-        #animaatio koe
-        self.animations_right = [QPixmap("static/koe1.png"), QPixmap("static/koe2.png"), QPixmap("static/koe3.png")]
-        self.animations_left = [QPixmap("static/koe4.png"), QPixmap("static/koe5.png"), QPixmap("static/koe6.png")]
-        #/
+        #animaatio
+        self.animations_right = [QPixmap("static/kario2_right.png"), QPixmap("static/kario3_right.png"), QPixmap("static/kario2_right.png"), QPixmap("static/kario5_right.png")]
+        self.animations_left = [QPixmap("static/kario2_left.png"), QPixmap("static/kario3_left.png"), QPixmap("static/kario2_left.png"), QPixmap("static/kario5_left.png")]
 
-        self.setPixmap(self.animations_right[0])
-        # self.setPixmap(QPixmap("static/kario_right.png"))
+
+        self.setPixmap(QPixmap("static/kario1_right.png"))
         self.setPos(self.x, self.y)
 
         self.lift = -17
@@ -35,7 +35,6 @@ class Player(QGraphicsPixmapItem):
         self.alive = True
 
     def set_player(self, x, y):
-        #self.setRect(x, y, 40, 40)
         self.setPos(x, y)
 
 
@@ -44,18 +43,19 @@ class Player(QGraphicsPixmapItem):
             self.vel_x += -globals.PLAYER_SPEED
             self.counter += 0.15
             self.dir = 1
-            #self.setPixmap(QPixmap("static/kario_left.png"))
-        if Qt.Key_Right in keys_pressed:#muutettu if -> elif animaatiota varten
+
+        if Qt.Key_Right in keys_pressed:
             self.vel_x += globals.PLAYER_SPEED
             self.counter += 0.15
             self.dir = 0
-            #self.setPixmap(QPixmap("static/kario_right.png"))
+
         if Qt.Key_Right not in keys_pressed and Qt.Key_Left not in keys_pressed:
             self.counter = 0
             if self.dir == 0:
-                self.setPixmap(self.animations_right[0])
+                self.setPixmap(QPixmap("static/kario1_right.png"))
             else:
-                self.setPixmap(self.animations_left[0])
+                self.setPixmap(QPixmap("static/kario1_left.png"))
+
         if Qt.Key_Space in keys_pressed:
             keys_pressed.remove(Qt.Key_Space)
             if self.vel_y == 0 and self.can_jump:
@@ -68,14 +68,14 @@ class Player(QGraphicsPixmapItem):
         self.move(keys_pressed)
         if not self.can_jump:
             if self.dir == 0:
-                self.setPixmap(self.animations_right[1])
+                self.setPixmap(QPixmap("static/kario4_right.png"))
             else:
-                self.setPixmap(self.animations_left[1])
-        else:
+                self.setPixmap(QPixmap("static/kario4_left.png"))
+        elif self.counter != 0:
             if self.dir == 0:
-                self.setPixmap(self.animations_right[math.floor(self.counter % 3)])
+                self.setPixmap(self.animations_right[math.floor(self.counter % 4)])
             else:
-                self.setPixmap(self.animations_left[math.floor(self.counter % 3)])
+                self.setPixmap(self.animations_left[math.floor(self.counter % 4)])
 
         # Painovoima
         self.vel_y += globals.GRAVITY
@@ -86,14 +86,6 @@ class Player(QGraphicsPixmapItem):
             self.vel_x = -4.8
         if self.vel_x < 0.6 and self.vel_x > -0.6:
             self.vel_x = 0
-            # if self.dir == 0:
-            #     self.setPixmap(self.animations_right[0])
-            # else:
-            #     self.setPixmap(self.animations_left[0])
-        # if self.vel_y > 100:
-        #     self.vel_y = 100
-        # if self.vel_y < -100:
-        #     self.vel_y = -100
 
 
         new_x = self.x + self.vel_x
@@ -125,12 +117,10 @@ class Player(QGraphicsPixmapItem):
 
         self.set_player(self.x, self.y)
 
-        # self.vel_x = 0
         if self.can_jump:
             self.vel_x *= 0.85
         else:
             self.vel_x *= 0.985
-        #print(self.vel_x, self.vel_y)
 
 
         # Tarkastetaan vihollisen sijainti
@@ -146,7 +136,7 @@ class Player(QGraphicsPixmapItem):
                 self.vel_x = 0
 
         #Tarkistetaan ollaanko maalissa ja tehdaan animaatio
-        if self.collidesWithItem(goal):
+        if self.collidesWithItem(goal) and self.score == len(prices):
             goal.victory = True
         if goal.victory:
             goal.counter += 0.1
@@ -166,3 +156,4 @@ class Player(QGraphicsPixmapItem):
             if (self.x + 40 > price.x and self.x < price.x + 20 and self.y + 40 > price.y
                 and self.y < price.y + 20 and not price.deleted):
                 price.available = False
+                self.score += 1

@@ -46,9 +46,6 @@ class Scene(QGraphicsScene):
 
         self.enemy = Enemy(500, 200)
         self.addItem(self.enemy)
-        self.removeItem(self.enemy)
-        self.enemy = Enemy(500, 200)
-        self.addItem(self.enemy)
 
         self.price1 = Price(250, 350)
         self.addItem(self.price1)
