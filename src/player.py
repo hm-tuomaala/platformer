@@ -17,7 +17,7 @@ class Player(QGraphicsPixmapItem):
         self.vel_y = 0
         self.counter = 0
 
-        #dir0: oikealle, dir1: vasemmalle
+        #dir 0: oikealle, dir 1: vasemmalle
         self.dir = 0
         self.score = 0
 
