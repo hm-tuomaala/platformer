@@ -1,21 +1,18 @@
-1. Olen toteuttanut aloitus menun, josta pääsee infoon tai pelaamaan itse peliä.
-   Pelin sisällä olen toteuttanut yksinkertaisen liikkuvan vihollisen, tasoja
-   joiden päälle pelaaja voi hypätä, scorea lisääviä palkintoja, pelaajaa seuraavan
-   kameran ja itse pelaajan.
+# Kario Game
 
-2. Käyttöohje
+## Esittely
+  - Kario Game on yksinkertainen tasohyppely peli, jossa hahmoa ohjataan nuolinäppäimillä läpi Kario maailan
 
-  - Ohjelmaa voi ajaa ajamalla main.py tiedoston.
-  - Alussa voi valita joko infon tai pelaamisen. Itse peli tilassa on kokeiluna vasta
-    yksi vihollinen, muutama palkinto ja taso.
+## Tiedosto- ja kansiorakenne
 
-3. Aikataulu
+  - doc kansiosta löytyy suunnitelmat ja dokumentit
+  - src kansiosta löytyy lähdekoodi ja static kansio, joka sisältää kuvat ja json tiedoston
 
-  - Olen käyttänyt projektiin noin 12h.
-  - En ole tehnyt radikaaleja muutoksia aikatauluun.
+## Asennusohje
 
-4. Muuta
+  - Ohjelman käyttöön vaaditaan PyQt5
+  - Pip install PyQt5
 
-  - Collision detection algoritmini vaatii vielä paljon parantelua, ja se on tuntunut kaikkein
-    haastavimmalta osa-alueelta koko pelissä.
-  - En ole tehnyt vielä mitään radikaaleja muutoksia suunnitelmaan.
+## Käyttöohje
+
+  - Ohjelmaa ajetaan ajamalla src kansiosta löytyvä main.py tiedosto
