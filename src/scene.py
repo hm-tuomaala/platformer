@@ -37,7 +37,7 @@ class Scene(QGraphicsScene):
         self.player = Player()
         self.addItem(self.player)
 
-
+        #Luodaan maailma
         self.map = Map()
         for i in range(int(globals.SCREEN_HEIGHT / 40)):
             for j in range(int((globals.SCREEN_WIDTH*4) / 40)):
@@ -48,6 +48,7 @@ class Scene(QGraphicsScene):
         self.enemy = Enemy(500, 200)
         self.addItem(self.enemy)
 
+        #Luodaan palkinnot
         self.price1 = Price(250, 350)
         self.addItem(self.price1)
         self.prices.append(self.price1)

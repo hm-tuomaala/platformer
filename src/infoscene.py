@@ -53,7 +53,7 @@ class Infoscene(QGraphicsScene):
         self.addItem(self.text)
 
         self.view.update_scene(self)
-        #self.view.ensureVisible(bg)
+
 
     def mousePressEvent(self, QMouseEvent):
         if(QMouseEvent.scenePos().x() >= 40 and QMouseEvent.scenePos().x() <= 40+110

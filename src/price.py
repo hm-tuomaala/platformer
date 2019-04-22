@@ -10,11 +10,10 @@ class Price(QGraphicsPixmapItem):
         QGraphicsPixmapItem.__init__(self, parent)
         self.x = x
         self.y = y
-        # self.w = 10
-        # self.h = 10
+
         self.setPixmap(QPixmap("static/price.png"))
         self.setPos(self.x, self.y)
-        # self.setBrush(QBrush(Qt.red))
+
         self.available = True
         self.deleted = False
 

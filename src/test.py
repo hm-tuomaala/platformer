@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
         with open('static/highscore.json') as f:
             data = json.load(f)
         highscore = data["highscore"]
-        self.assertIsInstance(highscore, float)
+        self.assertTrue(isinstance(highscore, float) or isinstance(highscore, int))
 
     def test_map_tiles(self):
         list = [0,1,2,3,4,5,6,7]

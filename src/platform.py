@@ -9,9 +9,7 @@ class Platform(QGraphicsPixmapItem):
         QGraphicsPixmapItem.__init__(self, parent)
         self.x = x
         self.y = y
-        # self.width = 40
-        # self.height = 40
-        # self.setRect(self.x, self.y, self.width, self.height)
+        
         if val == 1:
             self.setPixmap(QPixmap("static/ground.png"))
             self.setPos(self.x, self.y)

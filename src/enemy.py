@@ -15,7 +15,7 @@ class Enemy(QGraphicsPixmapItem):
         self.vel_x = 0
         self.setPixmap(QPixmap("static/enemy_left.png"))
         self.setPos(self.x, self.y)
-        #self.setBrush(QBrush(Qt.green))
+
         self.can_move = True
         self.alive = True
         self.deleted = False
@@ -37,6 +37,7 @@ class Enemy(QGraphicsPixmapItem):
         new_x = self.x + self.vel_x
         new_y = self.y + self.vel_y
 
+        #Tormayksentunnistus
         if self.vel_x <= 0:
             if map.map[math.floor(self.y/40)][math.floor(new_x/40)] != 0 or map.map[math.floor((self.y+38)/40)][math.floor(new_x/40)] != 0:
                 new_x = math.floor(new_x/40)*40 + 40
